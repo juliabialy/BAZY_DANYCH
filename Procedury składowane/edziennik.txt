@@ -1,0 +1,42 @@
+CREATE DATABASE edziennik;
+USE edziennik;
+
+CREATE TABLE Klasa (IdKlasy int auto_increment primary key, Nazwa varchar(6), RokSzkolny varchar(4));
+
+Insert into Klasa values(null,'IIa','2015'), (null,'IVb','2013'), (null,'IIIa','2014');
+
+CREATE TABLE Uczen (IdUcznia int NOT NULL PRIMARY KEY, Nazwisko varchar(50) NOT NULL, Imie varchar(50) NOT NULL, DataUrodzenia   date, Pesel varchar(11), IdKlasy int) ENGINE=Innodb;
+
+Alter table Uczen Add Foreign Key(IdKlasy) References Klasa(IdKlasy);
+
+Insert into Uczen values(1,'Nowak','Kamil','1998-01-02','98010223561',3), (2,'Kwiecian','Anna','1997-06-12','97061223561',2), (3,'Blady','Mateusz','1999-11-02','99110223561',1);
+
+
+CREATE TABLE Nauczyciel (IdNauczyciela int primary key auto_increment, Nazwisko varchar(50), Imie varchar(50), DataUrodzenia date, Tytul varchar(32), Wyplata float, inicjaly varchar(6)) ENGINE=InnoDB;
+
+Insert into Nauczyciel values(null,'Nowak','Honorata','1986-01-02','kontraktowy', 3600, 'NH'), (null,'Kukla','Eugeniusz','1965-06-12','dyplomowany',4200, 'KE');
+
+
+CREATE TABLE Przedmiot (IdPrzedmiotu int auto_increment primary key, Nazwa varchar(15)) ENGINE=InnoDB;
+
+Insert into Przedmiot values(null,'matematyka'), (null,'informatyka'), (null,'jezyk polski'), (null,'w-f'), (null,'chemia'), (null,'jezyk angielski');
+
+CREATE TABLE Ocena(IdOceny int auto_increment primary key, Nazwa varchar(20));
+
+Insert into Ocena values(1,'niedostateczny') ,(2,'dopuszczajacy'), (3,'dostateczny') ,(4,'dobry'),(5,'bardzo dobry'), (6,'celujacy');
+
+CREATE TABLE BazaOcen(Id int auto_increment primary key, IdUcznia int, IdNauczyciela int, IdPrzedmiotu int, Ocena int, DataWystawienia date) ENGINE=InnoDB;
+
+CREATE TABLE Archiwum (IdUcznia int NOT NULL PRIMARY KEY, Nazwisko varchar(50) NOT NULL, Imie varchar(50) NOT NULL, Pesel varchar(11)) ENGINE=Innodb;
+
+CREATE TABLE bledy(error varchar(100));
+
+Alter table BazaOcen Add Foreign Key(Ocena) References Ocena(IdOceny);
+
+Alter table BazaOcen Add Foreign Key(IdUcznia) References Uczen(IdUcznia);
+
+Alter table BazaOcen Add Foreign Key(IdNauczyciela) References Nauczyciel(IdNauczyciela);
+
+Alter table BazaOcen Add Foreign Key(IdPrzedmiotu) References Przedmiot(IdPrzedmiotu);
+
+Insert into BazaOcen values(null,1,2,3,5,'2016-11-03');

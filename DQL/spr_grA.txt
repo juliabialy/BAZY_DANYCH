@@ -1,0 +1,11 @@
+﻿CREATE database firmax;
+use firmax;
+create table dzial(id_dzialu int primary key, nazwa varchar(25) not null, miasto varchar(25));
+create table pracownik(id_pracownika int primary key, nazwisko varchar(20) not null, imie varchar(20) not null, stanowisko int, data_zatrudnienia date, przelozony int,id_dzialu int);
+alter table pracownik add foreign key (id_dzialu) references dzial(id_dzialu);
+create table stanowisko(id_stanowiska int primary key, nazwa varchar(25) not null, placa float);
+alter table pracownik add foreign key(przelozony) references pracownik(id_pracownika);
+insert into dzial values(1,’operacje’,’Warszawa’), (2,’rachunkowosc’,’Lublin’), (3,’sprzedaz’,’Lublin’), (4,’badania’,’Warszawa’);
+insert into pracownik values(1,’Nowicki’,’Paweł’,1,’2012-02-12’,null,2), (2,’Nowak’,’Piotr’,1,’2000-02-12’,null,3),(3,’Kamiński’,’Janusz’,2,’2017-01-01’,1,3), (4,’Kawa’,’Jan’,2,’2011-01-01’,1,1);
+alter table pracownik add foreign key(stanowisko) references stanowisko(id_stanowiska);
+insert into stanowisko values(1,'starszy specjalista',5000),(2,'starszy ksiegowy',6000),(3,'mlodszy specjalista',4000);

@@ -1,0 +1,10 @@
+﻿create database biuro_projektowe;
+use biuro_projektowe;
+Create table pracownik(idpracownika char(2) primary key not null, imie varchar(25), nazwisko varchar(35),wyksztalcenie varchar(25),wiek int,data_zatrudnienia date);
+Create table projekt (idprojektu  char(2) primary key not null, nazwa varchar(40),budzet float, priorytet int, miasto varchar(25));
+Create table wynagrodzenie(idpracownika char(2), idprojektu char(2), wyplata float);
+Alter table wynagrodzenie add foreign key(idpracownika) references pracownik(idpracownika);
+Alter table wynagrodzenie add foreign key (idprojektu) references projekt(idprojektu);
+Insert into pracownik  values ('I1', 'Przemyslaw','Olczak','Informatyk',41, 20100102),('I2','Edward','Jodlowski','Informatyk',52,20010612),('E1','Jan','Makowski','Elektryk',36,19951210),('A1','Jakub','Markiewicz','Architekt',25,20161014);
+Insert into projekt values('P1','Oswietlenie ogrodu',10000,1,'Kraków'),('P2','Baza danych dla firmy ARA',200000,1,'Warszawa');
+Insert into wynagrodzenie values('I1','P2',2000),('I2','P2',1500),('E1','P1',1000),('A1','P1',2500);
