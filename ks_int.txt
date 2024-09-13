@@ -1,0 +1,64 @@
+CREATE TABLE Autor
+(
+id_autora int IDENTITY (1,1) NOT NULL PRIMARY KEY,
+nazwisko nvarchar (50) NOT NULL,
+imie nvarchar (30) NOT NULL,
+narodowosc nvarchar (30),
+okres_tworzenia nvarchar (35),
+jezyk nvarchar (30),
+rodzaj_tworczosci nvarchar (35),
+osiagniecia nvarchar (200)
+);
+
+CREATE TABLE Ksiazki
+(
+id_ksiazki int IDENTITY (1,1) NOT NULL PRIMARY KEY,
+tytul nvarchar (100) NOT NULL,
+id_autora int REFERENCES Autor (id_autora),
+cena money,
+wydawnictwo nvarchar (28),
+jezyk_ksiazki nvarchar (15),
+opis nvarchar (100),
+rok_wydania nvarchar (4)
+);
+
+CREATE TABLE Klient
+(
+id_klienta  int IDENTITY (1,1) NOT NULL PRIMARY KEY,
+nazwisko varchar(60) NOT NULL,
+imie nvarchar (40) NOT NULL,
+kod_pocztowy nvarchar (6),
+miejscowosc nvarchar (50) DEFAULT 'Warszawa',
+ulica nvarchar (50),
+nr_domu nvarchar (7),
+PESEL nvarchar (11) NOT NULL,
+telefon nvarchar (12) UNIQUE,
+adres_e_mail nvarchar (70)
+ );
+
+ CREATE TABLE Faktura
+ (
+ nr_faktury int IDENTITY (1,1) NOT NULL PRIMARY KEY,
+ sposob_platnosci nvarchar (30),
+ data_wystawienia_faktury date
+ );
+
+ CREATE TABLE Zamowienia
+ (
+ id_zamowienia int IDENTITY (1,1) NOT NULL PRIMARY KEY,
+ data_zlozenia_zamowienia date,
+ data_wysylki date,
+ koszt_wysylki money,
+ id_klienta int REFERENCES Klient (id_klienta),
+ id_faktury int REFERENCES Faktura (nr_faktury)
+ );
+
+ CREATE TABLE Rejestracja_zamowienia 
+ (
+ id_zamowienia int REFERENCES Zamowienia (id_zamowienia),
+ id_kksiazki int REFERENCES Ksiazki (id_ksiazki),
+ liczba_egz int
+ )
+
+
+
